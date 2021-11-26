@@ -1,0 +1,32 @@
+# h3. MLflow architecture
+
+# h4. Mlflow components and tasks
+
+* MLflow Project - creates environment for experiments, experiments grouping
+* MLflow Tracking - parameters fixation and quality metrics of experiments
+* MLflow Models - preparing a version of the model for distribution
+* MLflow Registry - centralized storage of models and putting into operation
+
+%%writefile MLproject
+name: tutorial
+    
+conda_env: conda.yml
+        
+entry_pints:
+   main:
+        parameters:
+           alpha: float
+           l1_ratio: {type: float, default: 0.1}
+        command: "python train.py {alpha} {l1_ratio}"
+		
+%%writefile mlflow-example/conda.yaml
+name: tutorial
+channels:
+    - defaults
+dependencies:
+    - numpy>=1.14.3
+    - pandas>=1.0.0
+    - scikit-learn=0.19.1
+    - pip
+    - pip:
+        - mlflow
